@@ -30,7 +30,9 @@ def signup(request):
     return Response({'response':'signup successful'})
 
 @api_view(['POST'])
+# @permission_classes((IsAuthenticated,))
 def heartPredictor(request):    
+    print(request.user)
     serializer = HeartDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     model = heartFunc(request.data['Age'],request.data['Sex'],request.data['ChestPainType'],
