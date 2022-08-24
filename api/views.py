@@ -30,9 +30,7 @@ def signup(request):
     return Response({'response':'signup successful'})
 
 @api_view(['POST'])
-# @permission_classes((IsAuthenticated,))
-def heartPredictor(request):    
-    print(request.user)
+def heartPredictor(request):   
     serializer = HeartDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     model = heartFunc(request.data['Age'],request.data['Sex'],request.data['ChestPainType'],
@@ -40,10 +38,9 @@ def heartPredictor(request):
                             request.data['RestingECG'],request.data['MaxHR'],request.data['ExerciseAngina'],
                             request.data['Oldpeak'],request.data['ST_Slope'])    
     model_result = f'prediction is {model}'
-    print(serializer.data)
-    print(model_result)
+    
     if request.user.is_authenticated:
-        user_serializer = userHistorySerializer(owner=request.user , test_name='Heart Disease', result=model_result)
+        user_serializer = userHistory(owner=request.user , test_name='Heart Disease', result=model_result)
         user_serializer.save()
 
     return Response(model_result)
@@ -57,10 +54,9 @@ def hepatitisPredictor(request):
                             request.data['BIL'],request.data['CHE'],request.data['CHOL'],
                             request.data['CREA'],request.data['GGT'],request.data['PROT'])    
     model_result = f'prediction is {model}'
-    print(serializer.data)
-    print(model_result)
+    
     if request.user.is_authenticated:
-        user_serializer = userHistorySerializer(owner=request.user , test_name='Hepatitis Disease', result=model_result)
+        user_serializer = userHistory(owner=request.user , test_name='Hepatitis Disease', result=model_result)
         user_serializer.save()
 
     return Response(model_result)
