@@ -1,3 +1,7 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+# Ignore jupyter notebooks
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
