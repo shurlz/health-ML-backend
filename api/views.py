@@ -11,6 +11,10 @@ from django.http import HttpResponse, JsonResponse
 from .models import userHistory, subscribers
 # Create your views here.
 
+@api_view(['GET'])
+def connect(request):
+    return JsonResponse({'status':'connected...'})
+
 @api_view(['POST'])
 def signup(request):
     username = request.data["username"]
@@ -27,46 +31,46 @@ def signup(request):
     new_user = User(username=username)
     new_user.set_password(password)
     new_user.save()
-    return Response({'response':'signup successful'})
+    return JsonResponse({'response':'signup successful'})
 
 @api_view(['POST'])
 def heartPredictor(request):   
     serializer = HeartDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    model = heartFunc(request.data['Age'],request.data['Sex'],request.data['ChestPainType'],
-                            request.data['RestingBP'],request.data['Cholesterol'],request.data['FastingBS'],
-                            request.data['RestingECG'],request.data['MaxHR'],request.data['ExerciseAngina'],
-                            request.data['Oldpeak'],request.data['ST_Slope'])    
-    model_result = f'prediction is {model}'
+    model = heartFunc(Age=request.data['Age'], Sex=request.data['Sex'], ChestPainType=request.data['ChestPainType'],
+                        RestingBP=request.data['RestingBP'], Cholesterol=request.data['Cholesterol'], FastingBS=request.data['FastingBS'],
+                            RestingECG=request.data['RestingECG'], MaxHR=request.data['MaxHR'], ExerciseAngina=request.data['ExerciseAngina'],
+                            Oldpeak=request.data['Oldpeak'], ST_Slope=request.data['ST_Slope'])    
+    model_result = 'positive' if model == 1 else 'negative'
     
     if request.user.is_authenticated:
         user_serializer = userHistory(owner=request.user , test_name='Heart Disease', result=model_result)
         user_serializer.save()
 
-    return Response(model_result)
+    return JsonResponse({'prediction':f'{model_result}'})
 
 @api_view(['POST'])
 def hepatitisPredictor(request):
     serializer = HepatitisDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    model = hepatitisFunc(request.data['Age'],request.data['Sex'],request.data['ALB'],
-                            request.data['ALP'],request.data['ALT'],request.data['AST'],
-                            request.data['BIL'],request.data['CHE'],request.data['CHOL'],
-                            request.data['CREA'],request.data['GGT'],request.data['PROT'])    
-    model_result = f'prediction is {model}'
+    model = hepatitisFunc(Age=request.data['Age'], Sex=request.data['Sex'], ALB=request.data['ALB'],
+                            ALP=request.data['ALP'], ALT=request.data['ALT'], AST=request.data['AST'],
+                            BIL=request.data['BIL'], CHE=request.data['CHE'], CHOL=request.data['CHOL'],
+                            CREA=request.data['CREA'], GGT=request.data['GGT'], PROT=request.data['PROT'])    
+    model_result = 'positive' if model == 1 else 'negative'
     
     if request.user.is_authenticated:
         user_serializer = userHistory(owner=request.user , test_name='Hepatitis Disease', result=model_result)
         user_serializer.save()
 
-    return Response(model_result)
+    return JsonResponse({'prediction':f'{model_result}'})
 
 @api_view(['POST'])
 def strokePredictor(request):
     serializer = StrokeDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     model = ''#function .predict processed input
-    return Response(model)
+    return JsonResponse({'prediction':f'{model_result}'})
 
 @api_view(['POST'])
 def signin(request):
@@ -75,7 +79,7 @@ def signin(request):
     user = serializer.validated_data['user']
     _ , token = AuthToken.objects.create(user)
 
-    return Response({'token':f'{token}'})
+    return Response({'token':token})
 
 @api_view(['POST'])
 def subscribe(request):

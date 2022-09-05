@@ -3,7 +3,7 @@ from . import views
 from knox import views as knox_views
 
 urlpatterns = [
-    path('', views.heartPredictor ,name='get_prediction'),
+    path('', views.connect ,name='connect'),
     path('signup/', views.signup ,name='signup'),
     path('logout/', knox_views.LogoutAllView.as_view() ,name='logout'),
     path('signin/', views.signin ,name='signin'),
