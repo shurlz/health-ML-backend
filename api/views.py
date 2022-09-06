@@ -79,7 +79,7 @@ def signin(request):
     user = serializer.validated_data['user']
     _ , token = AuthToken.objects.create(user)
 
-    return Response({'token':token})
+    return JsonResponse({'token':token})
 
 @api_view(['POST'])
 def subscribe(request):
