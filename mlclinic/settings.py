@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 import os
+import 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -76,16 +77,26 @@ WSGI_APPLICATION = 'mlclinic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'clinic',
+#         'USER':'postgres',
+#         'PASSWORD':'doebaba10',
+#         'HOST':'localhost'
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'clinic',
-        'USER':'postgres',
-        'PASSWORD':'doebaba10',
-        'HOST':'localhost'
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd3qvlb6eatq41f',
+        'USER':'ibmdwwdxkdwdnt',
+        'PASSWORD':'2beacdb6773f8d483b0f7d526aba99a3871cc341b086ec0690820722104b35ea',
+        'HOST':'ec2-44-205-64-253.compute-1.amazonaws.com',
+        'PORT':'5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
