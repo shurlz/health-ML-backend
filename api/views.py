@@ -88,10 +88,10 @@ def signin(request):
 @api_view(['POST','GET'])
 def subscribe(request):
     if request.method == 'POST':
-        serializer = subscribersSerializer(data=request.data)
+        serializer = subscribersSerializer(data=request.POST)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data)
+        return JsonResponse(serializer.data)
 
 @api_view(['POST','GET'])
 @permission_classes((IsAuthenticated,))
