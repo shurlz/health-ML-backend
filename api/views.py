@@ -15,7 +15,7 @@ from .models import userHistory, subscribers
 def connect(request):
     return JsonResponse({'status':'connected...'})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def signup(request):
     username = request.data["username"]
     password = request.data["password"]
@@ -33,7 +33,7 @@ def signup(request):
     new_user.save()
     return JsonResponse({'response':'signup successful'})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def heartPredictor(request):   
     serializer = HeartDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -49,7 +49,7 @@ def heartPredictor(request):
 
     return JsonResponse({'prediction':f'{model_result}'})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def hepatitisPredictor(request):
     serializer = HepatitisDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -65,14 +65,14 @@ def hepatitisPredictor(request):
 
     return JsonResponse({'prediction':f'{model_result}'})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def strokePredictor(request):
     serializer = StrokeDataSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     model = ''#function .predict processed input
     return JsonResponse({'prediction':f'{model_result}'})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def signin(request):
     serializer = AuthTokenSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -81,14 +81,14 @@ def signin(request):
 
     return JsonResponse({'token':token})
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def subscribe(request):
     serializer = subscribersSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     serializer.save()
     return Response(serializer.data)
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @permission_classes((IsAuthenticated,))
 def unsubscribe(request):
     serializer = subscribersSerializer(data=request.data)
@@ -100,7 +100,7 @@ def unsubscribe(request):
         return Response('you are not subscribed')
     return Response(serializer.data)
 
-@api_view(['GET'])
+@api_view(['POST','GET'])
 @permission_classes((IsAuthenticated,))
 def user_history(request):
     user_history_data = userHistory.objects.filter(owner=request.user)
