@@ -28,7 +28,7 @@ class HeartDataSerializer(Serializer):
     MaxHR = serializers.FloatField(required=True, min_value=50, max_value=210)
     ExerciseAngina = serializers.CharField(required=True)
     Oldpeak = serializers.FloatField(required=True, min_value=-5, max_value=10)
-    ST_Slope = serializers.FloatField(required=True)
+    ST_Slope = serializers.CharField(required=True)
 
 class StrokeDataSerializer(Serializer):
     pass

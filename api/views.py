@@ -54,7 +54,6 @@ def heartPredictor(request):
 @api_view(['POST','GET'])
 def hepatitisPredictor(request):
     if request.method == 'POST':
-        print('data sent',request.POST)
         serializer = HepatitisDataSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         model = hepatitisFunc(Age=request.data['Age'], Sex=request.data['Sex'], ALB=request.data['ALB'],
@@ -62,7 +61,7 @@ def hepatitisPredictor(request):
                                 BIL=request.data['BIL'], CHE=request.data['CHE'], CHOL=request.data['CHOL'],
                                 CREA=request.data['CREA'], GGT=request.data['GGT'], PROT=request.data['PROT'])    
         model_result = 'positive' if model == 1 else 'negative'
-        print('model result',model_result)
+        
         if request.user.is_authenticated:
             user_serializer = userHistory(owner=request.user , test_name='Hepatitis Disease', result=model_result)
             user_serializer.save()
