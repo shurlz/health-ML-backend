@@ -11,9 +11,6 @@ from django.http import HttpResponse, JsonResponse
 from .models import userHistory, subscribers
 # Create your views here.
 
-@api_view(['GET'])
-def connect(request):
-    return JsonResponse({'status':'connected...'})
 
 @api_view(['POST','GET'])
 def signup(request):
@@ -114,4 +111,18 @@ def user_history(request):
         serializer = userHistorySerializer(user_history_data,many=True)
         return Response(serializer.data)
 
+routes = {
+    'The base url' : 'http://mlclinic.herokuapp.com/api/',
+    'For heart prediction' : 'http://mlclinic.herokuapp.com/api/heart/',
+    'For hepatitis prediction' : 'http://mlclinic.herokuapp.com/api/hepatitis/',
+    'For signup' : 'http://mlclinic.herokuapp.com/api/signup/         -[ form fields : username , password, confirm_password]',
+    'For signin' : 'http://mlclinic.herokuapp.com/api/signin/         -[ form fields : username , password ]',
+    'For my-history' : 'http://mlclinic.herokuapp.com/api/myhistory/  -[ send user"s token generated through successful sign-in ]',
+    'For subscribe' : 'http://mlclinic.herokuapp.com/api/subscribe/   -[ form fields : email ]',
+    'For unsubscribe' : 'http://mlclinic.herokuapp.com/api/unsubscribe/    -[ form fields : email ]',
+    'For logout/delete token' : 'http://http://mlclinic.herokuapp.com/api/logout/   [ link the logout button directly to the link ]'
+    }
 
+@api_view(['GET'])
+def connect(request):
+    return Response({'API ROUTES':routes})

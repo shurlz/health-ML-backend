@@ -24,7 +24,7 @@ import psycopg2
 SECRET_KEY = 'django-insecure-h0702cjbys97zil^babzpxj-lyjem5jf#8r!!&dwifpmerab@+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
