@@ -30,6 +30,8 @@ def signup(request):
         new_user.set_password(password)
         new_user.save()
         return JsonResponse({'response':'signup successful'})
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 def heartPredictor(request):   
@@ -47,6 +49,8 @@ def heartPredictor(request):
             user_serializer.save()
 
         return JsonResponse({'prediction':f'{model_result}'})
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 def hepatitisPredictor(request):
@@ -64,6 +68,8 @@ def hepatitisPredictor(request):
             user_serializer.save()
 
         return JsonResponse({'prediction':f'{model_result}'})
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 def strokePredictor(request):
@@ -81,6 +87,8 @@ def signin(request):
         _ , token = AuthToken.objects.create(user)
 
         return JsonResponse({'token':token})
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 def subscribe(request):
@@ -89,6 +97,8 @@ def subscribe(request):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return JsonResponse(serializer.data)
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 @permission_classes((IsAuthenticated,))
@@ -102,6 +112,8 @@ def unsubscribe(request):
         except:
             return Response('you are not subscribed')
         return Response(serializer.data)
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 @api_view(['POST','GET'])
 @permission_classes((IsAuthenticated,))
@@ -110,6 +122,8 @@ def user_history(request):
         user_history_data = userHistory.objects.filter(owner=request.user)
         serializer = userHistorySerializer(user_history_data,many=True)
         return Response(serializer.data)
+    if request.method == 'GET':
+        return Response({'connected..':'Make a POST request with the required parameters to retrieve a valid response'})
 
 routes = {
     'The base url' : 'http://mlclinic.herokuapp.com/api/',
